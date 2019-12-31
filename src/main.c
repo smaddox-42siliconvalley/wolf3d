@@ -15,7 +15,6 @@
 
 void	print_map(t_map map)
 {
-	int i = 0;
 	for (int i = 0; i < map.size; i++)
 	{
 		if (i != 0 && (i % map.size_line == 0))
@@ -28,11 +27,11 @@ void	print_map(t_map map)
 
 int main(int ac, char **av)
 {
+	(void)ac;
 	t_game game;
 	get_map(av[1], &game);
 	get_player(&game);
 	mlx_start(&game);
-	//render(&game);
 	mlx_loop_hook(game.mlx, &render, &game);
 	mlx_key_hook(game.mlx_win, &key_hook, &game);
 	mlx_loop(game.mlx);

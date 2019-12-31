@@ -1,7 +1,5 @@
 							WOLF3D TODO
 -------------------------------------------------------------------------------
 
-write a realloc for resizing the buffer
-write a cleanup function for string_split
-A valid must have 1's and 0's seperated only by ',' the last line of the file
-must have one newline character
+Optimize data structures
+add wall collision
