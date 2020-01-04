@@ -6,11 +6,16 @@
 /*   By: smaddox <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/04 09:36:55 by smaddox           #+#    #+#             */
-/*   Updated: 2020/01/04 10:59:48 by smaddox          ###   ########.fr       */
+/*   Updated: 2020/01/04 11:10:23 by smaddox          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
+
+int	rip_window(void)
+{
+	exit(0);
+}
 
 void	set_tex(t_game *g)
 {
@@ -41,6 +46,7 @@ int		main(int ac, char **av)
 	mlx_loop_hook(game.mlx, &render, &game);
 	mlx_do_key_autorepeaton(game.mlx);
 	mlx_hook(game.mlx_win, 2, 0, &key_hook, &game);
+	mlx_hook(game.mlx_win, 17, 0, &rip_window, NULL);
 	mlx_loop(game.mlx);
 	return (0);
 }
