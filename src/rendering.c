@@ -53,8 +53,7 @@ void		cast_ray(t_map *map, t_ray *ray)
 			ray->mpx += ray->stepx;
 			ray->side = 0;
 		}
-		else
-		{
+		else {
 			ray->sd.y += ray->delta_dist.y;
 			ray->mpy += ray->stepy;
 			ray->side = 1;
@@ -116,14 +115,21 @@ void		zero_img(char *data)
 
 int		pick_tex(t_ray *r)
 {
-		(void)r;
-		int i;
-		
-		i = r->side;
-		return(i+1);
+	if(r->side == 0)
+	{
+		if (r->dir.x < 0)
+			return(0);
+		else
+			return(1);
+	}
+	else
+	{
+		if (r->dir.y < 0)
+			return(2);
+		else
+			return(3);
+	}
 }
-
-
 
 int		render(t_game *g)
 {
@@ -138,6 +144,8 @@ int		render(t_game *g)
 		setup_ray(g, &ray, x);
 		cast_ray(&(g->map), &ray);
 		crunch_numbers(&ray, g->player.pos.x, g->player.pos.y, (g->tex[0]).h);
+		if(x == 300)
+			printf("%f %f\n", ray.dir.x, ray.dir.y);
 		draw_tex(&(g->tex[(pick_tex(&ray))]), &(g->img), &ray, x);
 	}
 	mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.ptr, 0, 0);
