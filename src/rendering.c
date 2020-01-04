@@ -116,21 +116,30 @@ void		zero_img(char *data)
 int		pick_tex(t_ray *r)
 {
 	if(r->side == 0)
-	{
-		if (r->dir.x < 0)
-			return(0);
-		else
-			return(1);
-	}
+		return((r->dir.x < 0) ? 0 : 1);
 	else
-	{
-		if (r->dir.y < 0)
-			return(2);
-		else
-			return(3);
-	}
+		return((r->dir.y < 0) ? 2 : 3);
 }
 
+void	draw_floor_ceiling(t_game *g)
+{
+	int			i;
+	uint32_t	*ptr; 
+	time_t		t;
+
+
+	srand((unsigned)time(&t));
+	rand();
+	i = -1;
+	ptr = (uint32_t*)g->img.data;
+	while (++i < (WINDOW_X * WINDOW_Y) / 2)
+		if((rand() % 100) == 1)
+			ptr[i] = 0x00ffffff;
+		else
+			ptr[i] = 0x00000064;
+	while (++i < (WINDOW_X * WINDOW_Y))
+			ptr[i] = 0x00003000;
+}
 int		render(t_game *g)
 {
 	int		x;
@@ -138,14 +147,13 @@ int		render(t_game *g)
 
 	x = -1;
 	zero_img(g->img.data);
+	draw_floor_ceiling(g);
 	mlx_clear_window(g->mlx, g->mlx_win);
 	while (++x < WINDOW_X)
 	{
 		setup_ray(g, &ray, x);
 		cast_ray(&(g->map), &ray);
 		crunch_numbers(&ray, g->player.pos.x, g->player.pos.y, (g->tex[0]).h);
-		if(x == 300)
-			printf("%f %f\n", ray.dir.x, ray.dir.y);
 		draw_tex(&(g->tex[(pick_tex(&ray))]), &(g->img), &ray, x);
 	}
 	mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.ptr, 0, 0);

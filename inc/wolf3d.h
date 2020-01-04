@@ -5,10 +5,12 @@
 #include <fcntl.h>
 #include <mlx.h>
 #include <math.h>
+#include <stdlib.h>
+#include <time.h>
 
 # define TEX_DEFAULT_SIZE 100 
-# define WINDOW_X 600
-# define WINDOW_Y 400
+# define WINDOW_X 800
+# define WINDOW_Y 600
 # define MAX_MAP_SIZE 4096
 # define WINDOW_NAME "wolf3d"
 
