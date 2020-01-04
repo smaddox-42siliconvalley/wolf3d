@@ -1,14 +1,29 @@
-#include <stdlib.h>
-#include <unistd.h>
-#include <ft_printf.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <mlx.h>
-#include <math.h>
-#include <stdlib.h>
-#include <time.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wolf3d.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smaddox <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/04 13:08:17 by smaddox           #+#    #+#             */
+/*   Updated: 2020/01/04 13:18:38 by smaddox          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-# define TEX_DEFAULT_SIZE 100 
+#ifndef WOLF3D_H
+# define WOLF3D_H
+
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <errno.h>
+# include <fcntl.h>
+# include <mlx.h>
+# include <math.h>
+# include <stdlib.h>
+# include <time.h>
+# include "libft.h"
+
 # define WINDOW_X 800
 # define WINDOW_Y 600
 # define MAX_MAP_SIZE 4096
@@ -40,13 +55,12 @@ typedef struct	s_ray
 	int			stepy;
 	int			collision;
 	int			side;
-	int			lh;	//lineHeight
-	int			dstart; //draw_start
-	int			dend; //draw_end
-	//texture
-	float		wx; //where the wall was hit
-	int			tx; //texture x
-	int			tc; //texture choice
+	int			lh;//lineHeight
+	int			dstart;//draw_start
+	int			dend;//draw_end
+	float		wx;//where the wall was hit
+	int			tx;//texture x
+	int			tc;//texture choice
 }				t_ray;
 
 typedef struct	s_map
@@ -55,7 +69,6 @@ typedef struct	s_map
 	int			size_line;
 	int			map[MAX_MAP_SIZE];
 }				t_map;
-
 
 typedef struct	s_image
 {
@@ -78,17 +91,13 @@ typedef struct	s_game
 	t_image		tex[4];
 }				t_game;
 
-/*				parsing maps */
-//t_map			get_map(char *file);
 void			get_map(char *file, t_game *g);
 void			print_map(t_map map);
 int				key_hook(int key_code, t_game *g);
-
 int				render(t_game *g);
-
-
-/*				general utils */
 int				is_perfect_square(int num);
 void			panic(int num);
 void			get_player(t_game *g);
 void			mlx_start(t_game *game);
+
+#endif

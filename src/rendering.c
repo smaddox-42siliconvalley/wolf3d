@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   renderingtwo.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smaddox <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/04 13:01:24 by smaddox           #+#    #+#             */
+/*   Updated: 2020/01/04 13:04:25 by smaddox          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <wolf3d.h>
 
 static void	setup_ray(t_game *g, t_ray *r, int x)
@@ -21,28 +33,25 @@ static void	setup_ray(t_game *g, t_ray *r, int x)
 static void	crunch_numbers(t_ray *r, float px, float py, float t)
 {
 	r->pwall = ((r->side == 0) ?
-			((r->mpx - px + (1 - r->stepx) / 2)/ r->dir.x) :
+			((r->mpx - px + (1 - r->stepx) / 2) / r->dir.x) :
 			((r->mpy - py + (1 - r->stepy) / 2) / r->dir.y));
 	r->lh = (int)(WINDOW_Y / r->pwall);
 	r->dstart = -(r->lh) / 2 + WINDOW_Y / 2;
 	r->dstart = (r->dstart < 0) ? 0 : r->dstart;
 	r->dend = r->lh / 2 + WINDOW_Y / 2;
 	r->dend = ((r->dend >= WINDOW_Y) ? (WINDOW_Y - 1) : r->dend);
-	/*texture stuff*/
 	r->wx = (r->side == 0) ? (py + r->pwall * r->dir.y) :
 		(px + r->pwall * r->dir.x);
 	r->wx -= floorf(r->wx);
 	r->tx = (int)(r->wx * (float)t);
-	if(((r->side == 0) && (r->dir.x > 0))
+	if (((r->side == 0) && (r->dir.x > 0))
 			|| ((r->side == 1) && (r->dir.y < 0)))
 		r->tx = t - r->tx - 1;
-
 }
 
 void		cast_ray(t_map *map, t_ray *ray)
 {
 	int collision;
-
 
 	collision = 0;
 	while (!collision)
@@ -53,27 +62,28 @@ void		cast_ray(t_map *map, t_ray *ray)
 			ray->mpx += ray->stepx;
 			ray->side = 0;
 		}
-		else {
+		else
+		{
 			ray->sd.y += ray->delta_dist.y;
 			ray->mpy += ray->stepy;
 			ray->side = 1;
 		}
 		if (map->map[(ray->mpx + (ray->mpy * map->size_line))])
 			collision = 1;
-	} 
+	}
 }
 
 void		draw_tex(t_image *tex, t_image *img, t_ray *r, int x)
 {
-	int		ty;
-	int		index;
-	uint32_t color;
-	uint32_t *ptr;
-	uint32_t *pc;
+	int			ty;
+	int			index;
+	uint32_t	color;
+	uint32_t	*ptr;
+	uint32_t	*pc;
 
 	ptr = (uint32_t*)(img->data);
 	pc = (uint32_t*)(tex->data);
-	while(r->dstart < r->dend)
+	while (r->dstart < r->dend)
 	{
 		ty = ((r->dstart - WINDOW_Y / 2 + r->lh / 2) * tex->h) / r->lh;
 		color = *(pc + (r->tx + (int)ty * (tex->size_line / 4)));
@@ -82,80 +92,29 @@ void		draw_tex(t_image *tex, t_image *img, t_ray *r, int x)
 		r->dstart += 1;
 	}
 }
-void		draw_line(t_image *img, t_ray *r, int x)
-{
-	uint32_t color;
-	uint32_t *ptr;
-	int index;
-	int	start;
-	int end;
 
-	start = r->dstart;
-	end = r->dend;
-	ptr = (uint32_t*)(img->data);
-	color = ((r->side == 0) ?  0x00FF0000 : 0x000000FF); 
-	while(start < end)
-	{
-		index = (x + (start * (img->size_line / 4)));
-		ptr[index] = color;
-		start++;	
-	}	
-}
-
-void		zero_img(char *data)
-{
-	uint32_t *ptr;
-	int index;
-
-	index = -1;
-	ptr = (uint32_t*)data;
-	while(++index < (WINDOW_X * WINDOW_Y))
-		ptr[index] = 0x00000000;
-}
-
-int		pick_tex(t_ray *r)
-{
-	if(r->side == 0)
-		return((r->dir.x < 0) ? 0 : 1);
-	else
-		return((r->dir.y < 0) ? 2 : 3);
-}
-
-void	draw_floor_ceiling(t_game *g)
-{
-	int			i;
-	uint32_t	*ptr; 
-	time_t		t;
-
-
-	srand((unsigned)time(&t));
-	rand();
-	i = -1;
-	ptr = (uint32_t*)g->img.data;
-	while (++i < (WINDOW_X * WINDOW_Y) / 2)
-		if((rand() % 100) == 1)
-			ptr[i] = 0x00ffffff;
-		else
-			ptr[i] = 0x00000064;
-	while (++i < (WINDOW_X * WINDOW_Y))
-			ptr[i] = 0x00003000;
-}
-int		render(t_game *g)
+int			render(t_game *g)
 {
 	int		x;
 	t_ray	ray;
 
 	x = -1;
-	zero_img(g->img.data);
-	draw_floor_ceiling(g);
-	mlx_clear_window(g->mlx, g->mlx_win);
+	srand((unsigned)time(NULL));
+	while (++x < (WINDOW_X * WINDOW_Y) / 2)
+		*((uint32_t*)(g->img.data) + x) = (rand() % 100 == 1) ? 0xfffff : 0x64;
+	while (++x < (WINDOW_X * WINDOW_Y))
+		*((uint32_t*)(g->img.data) + x) = 0x3000;
+	x = -1;
 	while (++x < WINDOW_X)
 	{
 		setup_ray(g, &ray, x);
 		cast_ray(&(g->map), &ray);
 		crunch_numbers(&ray, g->player.pos.x, g->player.pos.y, (g->tex[0]).h);
-		draw_tex(&(g->tex[(pick_tex(&ray))]), &(g->img), &ray, x);
+		if (ray.side == 0)
+			draw_tex(&(g->tex[(ray.dir.x < 0) ? 0 : 1]), &(g->img), &ray, x);
+		else
+			draw_tex(&(g->tex[(ray.dir.y < 0) ? 2 : 3]), &(g->img), &ray, x);
 	}
 	mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.ptr, 0, 0);
-	return(0);
+	return (0);
 }

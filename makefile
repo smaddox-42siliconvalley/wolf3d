@@ -2,6 +2,7 @@ NAME =	wolf3d
 
 CFILES = \
 src/general_utils.c\
+src/keyhooks.c\
 src/main.c\
 src/parsing.c\
 src/rendering.c

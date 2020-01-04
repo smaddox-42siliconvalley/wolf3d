@@ -6,7 +6,7 @@
 /*   By: smaddox <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 19:26:28 by smaddox           #+#    #+#             */
-/*   Updated: 2019/07/21 16:32:56 by smaddox          ###   ########.fr       */
+/*   Updated: 2019/12/26 12:54:03 by smaddox          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <math.h>
 
 # define BASE_DIGITS "0123456789abcdef"
-# define T_NODE(type, var, member) ((( type )(( var ) -> content )) ->  member )
 
 typedef struct			s_list
 {
@@ -41,7 +40,8 @@ void					*ft_memalloc(size_t size);
 void					*ft_memccpy(void *dest, const void *src,
 		int c, size_t size);
 void					*ft_memchr(const void *str, int c, size_t n);
-int						ft_memcmp(const void *str1, const void *str2, size_t n);
+int						ft_memcmp(const void *str1, const void *str2,
+		size_t n);
 void					*ft_memcpy(void *dest, const void *src, size_t size);
 void					ft_memdel(void **ap);
 void					*ft_memmove(void *dest, const void *src, size_t n);
@@ -79,14 +79,16 @@ char					*ft_strnstr(const char *haystack,
 		const char *needle, size_t n);
 char					*ft_strrchr(const char *str, int c);
 char					**ft_strsplit(char const *s, char c);
-char					*ft_strstr(char const *thehaystack, char const *needle);
+char					*ft_strstr(char const *thehaystack,
+		char const *needle);
 char					*ft_strsub(char const *s, unsigned int
 		start, size_t len);
 char					*ft_strtrim(char const *s);
 int						ft_tolower(int c);
 int						ft_toupper(int c);
 t_list					*ft_lstnew(void const *content, size_t content_size);
-void					ft_lstdelone(t_list **alst, void (*del)(void*, size_t));
+void					ft_lstdelone(t_list **alst,
+		void (*del)(void*, size_t));
 void					ft_lstdel(t_list **alst, void (*del)(void*, size_t));
 void					ft_lstadd(t_list **alst, t_list *new);
 void					ft_lstiter(t_list *lst, void (*f)(t_list *elem));
@@ -103,12 +105,12 @@ char					*ft_itoa_base(int n, int base);
 char					*ft_unsignedlltoa_base(unsigned long long n, int base);
 char					*ft_dtoa(double d, int precision);
 char					*ft_longdtoa(long double d, int precision);
-
-					/* libft updates	*/
-
-void					ft_lstPush( t_list **alst, void const *content, size_t content_size );
-void					*ft_lstPop( t_list **alst );
-void					lstMergeSort( t_list **node, int (*cmp)(void*, void*));
-void					ft_lstreverse( t_list **node );
-void					ft_lst_rm_if( t_list **node, int (*check)(void*), void (*del)(void*));
+void					ft_lstpush(t_list **alst, void const *content,
+		size_t content_size);
+void					*ft_lstpop(t_list **alst);
+void					ft_lstmergesort(t_list **node,
+		int (*cmp)(void*, void*));
+void					ft_lstreverse(t_list **node);
+void					ft_lst_rm_if(t_list **node, int (*check)(void*),
+		void (*del)(void*));
 #endif

@@ -6,13 +6,13 @@
 /*   By: smaddox <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/04 09:36:55 by smaddox           #+#    #+#             */
-/*   Updated: 2020/01/04 11:10:23 by smaddox          ###   ########.fr       */
+/*   Updated: 2020/01/04 13:05:52 by smaddox          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-int	rip_window(void)
+int		rip_window(void)
 {
 	exit(0);
 }
@@ -38,7 +38,7 @@ int		main(int ac, char **av)
 {
 	t_game game;
 
-	(void)ac;
+	panic(ac);
 	get_map(av[1], &game);
 	get_player(&game);
 	mlx_start(&game);
