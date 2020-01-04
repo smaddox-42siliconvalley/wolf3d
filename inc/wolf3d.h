@@ -6,7 +6,7 @@
 /*   By: smaddox <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/04 13:08:17 by smaddox           #+#    #+#             */
-/*   Updated: 2020/01/04 13:18:38 by smaddox          ###   ########.fr       */
+/*   Updated: 2020/01/04 13:25:33 by smaddox          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct	s_vector
 
 typedef struct	s_player
 {
-	t_vector	pos; //position
+	t_vector	pos;
 	t_vector	dir;
 	t_vector	cam_plane;
 }				t_player;
@@ -45,22 +45,22 @@ typedef struct	s_player
 typedef struct	s_ray
 {
 	t_vector	dir;
-	t_vector	sd; // side distance
+	t_vector	sd;
 	t_vector	delta_dist;
-	int			mpx; //map position x
-	int			mpy; //map position y
-	float		cam_x; //cameraX
-	float		pwall; //perpwalldist
+	int			mpx;
+	int			mpy;
+	float		cam_x;
+	float		pwall;
 	int			stepx;
 	int			stepy;
 	int			collision;
 	int			side;
-	int			lh;//lineHeight
-	int			dstart;//draw_start
-	int			dend;//draw_end
-	float		wx;//where the wall was hit
-	int			tx;//texture x
-	int			tc;//texture choice
+	int			lh;
+	int			dstart;
+	int			dend;
+	float		wx;
+	int			tx;
+	int			tc;
 }				t_ray;
 
 typedef struct	s_map
