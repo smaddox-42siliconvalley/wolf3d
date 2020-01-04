@@ -6,6 +6,7 @@
 #include <mlx.h>
 #include <math.h>
 
+# define TEX_DEFAULT_SIZE 100 
 # define WINDOW_X 600
 # define WINDOW_Y 400
 # define MAX_MAP_SIZE 4096
@@ -40,6 +41,10 @@ typedef struct	s_ray
 	int			lh;	//lineHeight
 	int			dstart; //draw_start
 	int			dend; //draw_end
+	//texture
+	float		wx; //where the wall was hit
+	int			tx; //texture x
+	int			tc; //texture choice
 }				t_ray;
 
 typedef struct	s_map
@@ -57,6 +62,8 @@ typedef struct	s_image
 	int			bpp;
 	int			size_line;
 	int			endian;
+	int			h;
+	int			l;
 }				t_image;
 
 typedef struct	s_game
@@ -66,6 +73,7 @@ typedef struct	s_game
 	void		*mlx;
 	void		*mlx_win;
 	t_image		img;
+	t_image		tex[4];
 }				t_game;
 
 /*				parsing maps */
