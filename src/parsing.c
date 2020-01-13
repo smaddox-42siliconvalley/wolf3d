@@ -6,13 +6,13 @@
 /*   By: smaddox <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 07:11:00 by smaddox           #+#    #+#             */
-/*   Updated: 2020/01/04 13:18:53 by smaddox          ###   ########.fr       */
+/*   Updated: 2020/01/13 14:42:17 by smaddox          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <wolf3d.h>
 
-static void	fuckthelines(char *ch_buf, t_map *map)
+static void	linehelper(char *ch_buf, t_map *map)
 {
 	int i;
 	int j;
@@ -43,5 +43,5 @@ void		get_map(char *file, t_game *game)
 		panic(-1);
 	if ((read(fd, &ch_buf, MAX_MAP_SIZE)) == -1)
 		panic(-1);
-	fuckthelines(ch_buf, &(game->map));
+	linehelper(ch_buf, &(game->map));
 }
